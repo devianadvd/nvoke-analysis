@@ -251,7 +251,7 @@ uisave('recdata', fullfile(FolderPathVA.ventralApproach, 'recdata'));
 % Note: Signal processing toolbox and curve fitting toolbox are needed for this section
 clear opt
 % Defaults
-opt.lowpass_fpass = 1;
+opt.lowpass_fpass = 1; 
 opt.highpass_fpass = 4;   
 opt.smooth_method = 'loess';
 opt.smooth_span = 0.1;

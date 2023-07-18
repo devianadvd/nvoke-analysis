@@ -17,7 +17,7 @@ clearvars -except recdata_organized opt alignedData_allTrials adata alignedData_
 % This section is necessary for most sections in this workflow script. 
 % Even if you don't want to save the plots, FolderPathVA should exist to avoid bug
 
-GUI_chooseFolder = false; % true/false. Use GUI to locate the DataFolder and AnalysisFolder
+GUI_chooseFolder = true; % true/false. Use GUI to locate the DataFolder and AnalysisFolder
 
 if GUI_chooseFolder
 	DataFolder = uigetdir(matlabroot,'Choose a folder containing data and project folders');
@@ -42,7 +42,7 @@ end
 save_dir = uigetdir(AnalysisFolder);
 dt = datestr(now, 'yyyymmdd');
 save(fullfile(save_dir, [dt, '_ProcessedData_ogEx']),...
-    'recdata_organized','alignedData_allTrials','opt','adata');
+    'recdata_organized','alignedData_allTrials','adata');
 % 'recdata_organized','alignedData_allTrials','grouped_event','adata','grouped_event_setting','opt','adata'
 
 
@@ -136,7 +136,7 @@ end
 % Note: ROIs of all trials in alignedData_allTrials can be plotted. 
 %	Use 'filter' to screen ROIs based on the effect of stimulation
 close all
-save_fig = false; % true/false
+save_fig = true; % true/false
 
 filter_roi_tf = true; % true/false. If true, screen ROIs
 stim_names = {'og-5s','ap-0.1s','og-5s ap-0.1s'}; % compare the alignedData.stim_name with these strings and decide what filter to use
@@ -184,16 +184,16 @@ save_fig = false; % true/false
 gui_save = 'on';
 
 filter_roi_tf = true; % true/false. If true, screen ROIs
-stim_names = {'og-5s','ap-0.1s','og-5s ap-0.1s'}; % compare the alignedData.stim_name with these strings and decide what filter to use
-filters = {[0 nan nan nan], [1 nan nan nan], [0 nan nan nan]}; % [ex in rb]. ex: excitation. in: inhibition. rb: rebound
-diffPair = {[1 3], [2 3]}; % binned freq will be compared between stimualtion groups. cell number = stimulation pairs. [1 3] mean stimulation 1 vs stimulation 2
+stim_names = {'og-5s'}; % compare the alignedData.stim_name with these strings and decide what filter to use
+filters = {[nan nan nan nan], [1 nan nan nan], [0 nan nan nan]}; % [ex in rb exApOg]. ex: excitation. in: inhibition. rb: rebound
+diffPair = {[1 1]}; % binned freq will be compared between stimualtion groups. cell number = stimulation pairs. [1 3] mean stimulation 1 vs stimulation 2
 
 propName = 'peak_time'; % 'rise_time'/'peak_time'. Choose one to find the loactions of events
 binWidth = 1; % the width of histogram bin. the default value is 1 s.
 stimIDX = []; % []/vector. specify stimulation repeats around which the events will be gathered. If [], use all repeats 
 preStim_duration = 5; % unit: second. include events happened before the onset of stimulations
 postStim_duration = 15; % unit: second. include events happened after the end of stimulations
-customizeEdges = true; % true/false. customize the bins using function 'setPeriStimSectionForEventFreqCalc'
+customizeEdges = false; % true/false. customize the bins using function 'setPeriStimSectionForEventFreqCalc'
 stimEffectDuration = 1; % unit: second. Use this to set the end for the stimulation effect range
 
 stimEventsPos = false; % true/false. If true, only use the peri-stim ranges with stimulation related events
